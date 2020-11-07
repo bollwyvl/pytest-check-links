@@ -1,4 +1,5 @@
 -r ../requirements.txt
 codecov
 pytest-cov
+pytest-github-actions-annotate-failures;platform_system!='Windows'
 requests-cache
