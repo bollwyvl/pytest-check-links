@@ -8,18 +8,6 @@ import pytest
 
 import requests_cache
 
-from . import examples
-
-
-@pytest.fixture
-def base_args():
-    return ["-v", "--check-links", "--check-links-cache"]
-
-
-@pytest.fixture
-def memory_args(base_args):
-    return base_args + ["--check-links-cache-backend", "memory"]
-
 
 def assert_sqlite(testdir, name=None, tmpdir=None, exists=True):
     name = name or ".pytest-check-links-cache.sqlite"
