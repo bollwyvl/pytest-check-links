@@ -35,8 +35,9 @@ jobs:
           name: dist
           path: dist
 
-  linux:
+  test:
     name: ${{ matrix.PLATFORM }} py${{ matrix.PYTHON_VERSION }}
+    needs: build
     runs-on: ${{ matrix.PLATFORM }}
     strategy:
       fail-fast: false
