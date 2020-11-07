@@ -70,16 +70,24 @@ jobs:
           path: dist
       - name: Install built package
         run: |
-          python -m pip install --upgrade --find-links dist 'pytest-check-links[cache]' pytest-cov codecov
+          python -m pip install --upgrade --find-links dist 'pytest-check-links[ci]'
       - name: Show python environment
         run: |
           python --version
           python -m pip list
           python -m pip check
+      - name: Cache links
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: links
+      - name: Smoke test
+        run: |
+          pytest --check-links --check-links-cache --check-links-cache-name ~/.cache/pytest-check-links/ README.md
       - name: Run python tests
         # disable automatic inclusion for coverage
         run: |
-          pytest -p no:check-links --cov pytest_check_links --cov-report term-missing
+          pytest -p no:check-links -vv --cov pytest_check_links --cov-report term-missing
       - name: Upload coverage
         run: |
           codecov
