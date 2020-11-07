@@ -66,15 +66,16 @@ jobs:
           architecture: 'x64'
       - name: Install python dependencies
         run: |
-          pip install setuptools pip wheel --upgrade --user
+          python -m pip install setuptools pip wheel --upgrade --user
+          python -m pip install -r .github/requirements.txt
       - name: Download built artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
           path: dist
-      - name: Install built package
+      - name: Install build package
         run: |
-          python -m pip install --upgrade --find-links dist pytest-check-links codecov pytest-cov requests-cache
+          python -m pip install --no-index --find-links dist pytest-check-links
       - name: Show python environment
         run: |
           python --version
