@@ -83,11 +83,11 @@ jobs:
       - name: Cache links
         uses: actions/cache@v1
         with:
-          path: ~/.cache/pip
+          path: .pytest-check-links-cache.sqlite
           key: links
       - name: Smoke test
         run: |
-          pytest --check-links --check-links-cache --check-links-cache-name ~/.cache/pytest-check-links/ README.md
+          pytest --check-links --check-links-cache README.md
       - name: Run python tests
         # disable automatic inclusion for coverage
         run: |
