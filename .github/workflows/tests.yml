@@ -20,6 +20,8 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-build-${{ hashFiles('setup.cfg', 'requirements.txt', '.github/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-build-
       - name: Setup python
         uses: actions/setup-python@v1
         with:
@@ -46,7 +48,11 @@ jobs:
         uses: actions/cache@v1
         with:
           path: .pytest-check-links-cache.sqlite
-          key: links
+          key: |
+            smoke-${{ hashFiles('README.md') }}
+          restore-keys: |
+            smoke-
+
       - name: Smoke test
         run: |
           pytest \
@@ -74,7 +80,12 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-py-${{ matrix.PYTHON_VERSION }}-pip-${{ hashFiles('setup.cfg', 'requirements.txt', '.github/requirements.txt') }}
+          key: |
+            ${{ runner.os }}-test-${{ matrix.PYTHON_VERSION }}-${{ hashFiles('setup.cfg', 'requirements.txt', '.github/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-test-${{ matrix.PYTHON_VERSION }}-
+            ${{ runner.os }}-test-
+
       - name: Setup python ${{ matrix.PYTHON_VERSION }}
         uses: actions/setup-python@v1
         with:
