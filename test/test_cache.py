@@ -47,7 +47,10 @@ def test_cache_expiry(testdir, base_args, cache_name, tmpdir):
     t3 = time.time()
     result.assert_outcomes(**expected)
 
-    assert t1 - t0 > t3 - t2, "cache did not make second run faster"
+    d0 = t1 - t0
+    d1 = t3 - t2
+
+    assert d0 > d1, "cache did not make second run faster"
 
     time.sleep(2)
 
@@ -56,7 +59,10 @@ def test_cache_expiry(testdir, base_args, cache_name, tmpdir):
     t5 = time.time()
     result.assert_outcomes(**expected)
 
-    assert t5 - t4 > t3 - t2, "cache did not expire"
+    d2 = t5 - t4
+    d3 = t3 - t2
+
+    assert d2 > d3, "cache did not expire"
 
 
 def test_cache_memory(testdir, memory_args):
